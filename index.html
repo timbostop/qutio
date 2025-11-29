@@ -9,7 +9,7 @@ layout: default
         <h1>{{ post.title }}</h1>
       </a>
 
-    <p class="post-meta">
+    <p class="author_title" 
         <span>Posted by {{ post.author }} on {{ post.date | date: "%B %e, %Y" }}</span>
         {% include read-time.html content=post.content %}
     </p>
