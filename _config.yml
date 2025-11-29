@@ -20,7 +20,7 @@ avatar: /images/2472620.jpeg
 
 # Includes an icon in the footer for each username you enter
 footer-links:
-  github: timbostop/qutio
+  #github: timbostop/qutio
   rss: rss
 
 # Enter your Disqus shortname (not your username) to enable commenting on posts
