@@ -49,11 +49,11 @@ So last weekend I thought I was going to have to abandon my old iPad altogether 
 
 Luckily whilst digging through some forums I came across [Pixette](https://pixette.app/) - an app written by someone with similar ambitions. But this time - and for good or bad - Pixette doesn't have any integrations with 3rd party tools. Instead it is a way to display a \*locally\* served image library (off a NAS or similar) onto an iPad. This turns out to be genius and actually means that my new solution can be much more resilient to future changes in tech.
 
-So Pixette runs on my old laptop and expects the details of a local WebDav server which contains the images to display. This takes the responsibility for getting the images in sync away from the iPad and means it can just focus on displaying the images.
+So Pixette runs on my old iPad and expects the details of a local WebDav server which contains the images to display. This takes the responsibility for getting the images in sync away from the iPad and means it can just focus on displaying the images. Much better.
 
 In order to create a working solution I then needed to create the missing local server and somehow connect it to a source of photos. Now Google Photos is out because of the same restrictions via the API - and even Google has stopped providing an automatic "syncing" tool for a desktop or laptop computer.
 
-I happened to have a mini computer used for other purposes (e.g. HomeAssistant) that I could use for this. But the clincher was coming across [rclone](https://rclone.org/) which is a very capable synchronisation tool which happens to have a Dropbox integration AND can serve files over WebDav.
+I happened to have a mini PC running as a local server used for other purposes (e.g. Home Assistant) that I could use for this. But the clincher was coming across [rclone](https://rclone.org/) which is a very capable synchronisation tool which happens to have a Dropbox integration AND can serve files over WebDav.
 
 So below I'm going to take you through the steps I needed to do to get this working. And I can say it is now just as good as before - but even more resilient.
 
@@ -71,17 +71,19 @@ What you'll need:
 The way it works is:
 
 - You have an `rclone mount` job running against Dropbox with a "last month" filter so that it automatically synchronises only files from the last month (for your Camera Uploads folder) onto your linux server:  
-    `   rclone mount dropbox: /mnt/pve/shared/dropbox --allow-non-empty --max-age 6w`  
-    
+```
+    rclone mount dropbox: /mnt/pve/shared/dropbox --allow-non-empty --max-age 6w
+``` 
 
 - Then a similar `rclone serve` job which is running against that same synchronised folder and which then serves those images locally over a WebDav connection:  
-      
-    `rclone serve webdav '/mnt/pve/shared/dropbox/Camera Uploads' --user USER --pass PASSWORD --addr :2121`  
     
+```
+    rclone serve webdav '/mnt/pve/shared/dropbox/Camera Uploads' --user USER --pass PASSWORD --addr :2121` 
+```
 
 - Then the iPad and Pixette configured to point at the same URL from the latter WebDav protocol so that it can see the images.  
       
-    In my case the URL http://\[LOCAL IP OF SERVER\]:2121/ now contained the images!  
+    In my case the URL `http://\[LOCAL IP OF SERVER\]:2121/` now contained the images!  
     
 
 For running this a little more robustly you can use systemctl to turn these into jobs.
