@@ -89,11 +89,14 @@ For running this a little more robustly you can use systemctl to turn these into
 I also found that I needed to turn on the caching mode on rclone so that when the Dropbox sync was updating Pixette didn't see images disappearing or throw errors.
 
 So the final commands were:  
-  
+
+```sh
 `vi /etc/systemd/system/rclone-mount-dropbox.service`
+```
 
 Enter:
 
+```
 > \[Unit\]  
 > Description=Rclone mount  
 > After=network.target
@@ -106,12 +109,15 @@ Enter:
 > 
 > \[Install\]  
 > WantedBy=multi-user.target
+```
 
 And then for the serving:  
-  
-`vi /etc/systemd/system/rclone-serve-photos.service`
 
+```sh  
+`vi /etc/systemd/system/rclone-serve-photos.service`
+```
   
+```
 \[Unit\]  
 Description=Rclone serve  
 After=network.target
@@ -124,19 +130,28 @@ Restart=on-failure
 
 \[Install\]  
 WantedBy=multi-user.target
+```
 
 Now you can load those jobs and start and stop them:
 
+```
 `systemctl daemon-reload`  
 `systemctl start rclone-mount-dropbox.service`  
 `systemctl status rclone-mount-dropbox.service`  
 `systemctl stop rclone-mount-dropbox.service`  
+```
   
-  
+```
 `systemctl start rclone-serve-photos.service`  
 ``systemctl status rclone`-serve-photos`.service``  
 ``systemctl stop rclone`-serve-photos`.service``
+```
 
-I have to say it's really satisfying to have done this. And it's been running smoothly for a week now.
+I have to say it's really satisfying to have done this. And it's been running smoothly for months now.
+
+There is one outstanding problem with the setup:
+
+After a few days/weeks it seems to lose the dynamic updates.
+I think this is a problem with Pixette not the server - but basically it throws lots of not found errors when re-indexing. The solution so far has been to restart the server and then trigger a manual reindex. Am hoping to find a fix for this.
 
 Thanks Google for forcing me to have to learn a whole bunch of new stuff!
