@@ -78,7 +78,7 @@ The way it works is:
 - Then a similar `rclone serve` job which is running against that same synchronised folder and which then serves those images locally over a WebDav connection:  
     
 ```
-    rclone serve webdav '/mnt/pve/shared/dropbox/Camera Uploads' --user USER --pass PASSWORD --addr :2121` 
+    rclone serve webdav '/mnt/pve/shared/dropbox/Camera Uploads' --user USER --pass PASSWORD --addr :2121
 ```
 
 - Then the iPad and Pixette configured to point at the same URL from the latter WebDav protocol so that it can see the images.  
@@ -93,30 +93,30 @@ I also found that I needed to turn on the caching mode on rclone so that when th
 So the final commands were:  
 
 ```sh
-`vi /etc/systemd/system/rclone-mount-dropbox.service`
+vi /etc/systemd/system/rclone-mount-dropbox.service
 ```
 
 Enter:
 
 ```
-> \[Unit\]  
-> Description=Rclone mount  
-> After=network.target
-> 
-> \[Service\]  
-> User=root  
-> Group=root  
-> ExecStart=/usr/bin/rclone mount dropbox: /mnt/pve/shared/dropbox --vfs-cache-mode full --max-age 12w --allow-non-empty  
-> Restart=on-failure
-> 
-> \[Install\]  
-> WantedBy=multi-user.target
+\[Unit\]  
+Description=Rclone mount  
+After=network.target
+ 
+\[Service\]  
+User=root  
+Group=root  
+ExecStart=/usr/bin/rclone mount dropbox: /mnt/pve/shared/dropbox --vfs-cache-mode full --max-age 12w --allow-non-empty  
+Restart=on-failure
+
+\[Install\]  
+WantedBy=multi-user.target
 ```
 
 And then for the serving:  
 
 ```sh  
-`vi /etc/systemd/system/rclone-serve-photos.service`
+vi /etc/systemd/system/rclone-serve-photos.service
 ```
   
 ```
@@ -137,16 +137,16 @@ WantedBy=multi-user.target
 Now you can load those jobs and start and stop them:
 
 ```
-`systemctl daemon-reload`  
-`systemctl start rclone-mount-dropbox.service`  
-`systemctl status rclone-mount-dropbox.service`  
-`systemctl stop rclone-mount-dropbox.service`  
+systemctl daemon-reload
+systemctl start rclone-mount-dropbox.service
+systemctl status rclone-mount-dropbox.service
+systemctl stop rclone-mount-dropbox.service
 ```
   
 ```
-`systemctl start rclone-serve-photos.service`  
-``systemctl status rclone`-serve-photos`.service``  
-``systemctl stop rclone`-serve-photos`.service``
+systemctl start rclone-serve-photos.service
+systemctl status rclone-serve-photos.service
+systemctl stop rclone-serve-photos`.service
 ```
 
 I have to say it's really satisfying to have done this. And it's been running smoothly for months now.
