@@ -15,7 +15,7 @@ layout: default
     </p>
     
       <div class="entry">
-        {{ post.content }}
+        {{ post.content | truncate: 2000 }}
       </div>
 
       <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
