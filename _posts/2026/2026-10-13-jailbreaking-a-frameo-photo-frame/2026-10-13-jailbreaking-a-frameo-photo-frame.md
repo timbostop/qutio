@@ -9,9 +9,9 @@ How hard could it be? I did see some evidence of people having success with simi
 
 Turns out: quite hard. But also a genuinely interesting rabbit hole.
 
-==Caveat: I heavily leant on Claude Code to help me do this. I did not have (m)any of the necessary skills to do this alone and it would have taken me a lot longer if I did. I started in a Claude chat and quickly moved to Claude Code as it could navigate the USB commands and build everything for me, pretty much. We just had to coordinate the many times I booted it with different configurations, with or without holding down pins on the PCB and later with and without the bootable SD card. So if you want to do this I suggest you point Claude Code at this article and ask it to do the same for you.==
+> **Caveat: I heavily leant on Claude Code to help me do this. I did not have (m)any of the necessary skills to do this alone and it would have taken me a lot longer if I did. I started in a Claude chat and quickly moved to Claude Code as it could navigate the USB commands and build everything for me, pretty much. We just had to coordinate the many times I booted it with different configurations, with or without holding down pins on the PCB and later with and without the bootable SD card. So if you want to do this I suggest you point Claude Code at this article and ask it to do the same for you.**
 
-![The Bigasuo 15.6" Frameo photo frame](frame-product-1.jpg)
+![The Bigasuo 15.6" Frameo photo frame](/images/frameo/frame-product-1.jpg)
 
 ## The target
 
@@ -62,8 +62,10 @@ If you power it up with the regular power cable (not a computer) and also short 
 
 After some fiddling with a button combination (short the Update button on the PCB and tap Power a few times) I could get into a proper AOSP recovery menu:
 
-![Android recovery menu on the frame](recovery-menu.png)
+![Android recovery menu on the frame](/images/frameo/recovery-menu.png)
+
 Scrolling through this menu is absolutely diabolical (connecting a USB A keyboard in the other port doesn’t help) - you short the pins on the PCB to move UP this list (starting from the bottom) and press the power button to take the action. I did this with the screen balanced precariously looking away from me, with my phone in front of it taking a selfie so I could see which option - whilst I balanced one hand on the power button and the other hand with tweezers on the PCB… I only did it twice because I couldn’t bear the pressure!
+
 (the wrong option is potentially bricking the device).
 
 Recovery supports "Apply update from USB card", which just needs a correctly signed `update.zip` in the root of a USB stick. I built a minimal one, signed with the standard AOSP public test keys using `openssl cms -sign` to replicate what `signapk -w` does, and tried it:
@@ -74,7 +76,7 @@ Update package verification took 0.0 s (result 1).
 E:Signature verification failed
 ```
 
-![Recovery rejecting an unsigned update package](signature-error.png)
+![Recovery rejecting an unsigned update package](/images/frameo/signature-error.png)
 
 I worked through every public AOSP key (testkey, platform, shared, media), each in both SHA-1 and SHA-256 variants - eight attempts in total, all rejected. The recovery build reports as `user/release-keys`, meaning it only trusts the OEM's own private signing key, which obviously isn't public. 
 
@@ -126,9 +128,9 @@ No Rockchip protocol, no cap, just `dd` and `diskutil` working on raw sectors li
 
 I'd also been eyeing up the eMMC chip itself under the board's shield as a fallback option, in case none of this worked:
 
-![The frame's mainboard, with the eMMC and SoC under a shield - the “update button” is the pair of white concentric rectangles](pcb.png)
+![The frame's mainboard, with the eMMC and SoC under a shield - the “update button” is the pair of white concentric rectangles](/images/frameo/pcb.png)
 
-![The frame](frame-product-2.jpg)
+![The frame](/images/frameo/frame-product-2.jpg)
 
 Thankfully it never came to desoldering anything.
 
