@@ -37,7 +37,7 @@ On the PCB is a pair of concentric rectangles where a “button” should be ins
 
 Rockchip devices like this can be put into a USB "Loader" or "Maskrom" mode and talked to (from a Mac) with `rkdeveloptool`, the open source flashing tool. 
 
-When I powered the frame up with a USB C -> C cable to the Mac directly (not through a hub) AND held down some tweezers across the update button pads (carefully balancing the screen and the cables) while it booted, I was impressed to see we got “Loader” mode over USB. So the cable was actually find. Something else must be blocking the ADB connection.
+When I powered the frame up with a USB C -> C cable to the Mac directly (not through a hub) AND held down some tweezers across the update button pads (carefully balancing the screen and the cables) while it booted, I was impressed to see we got “Loader” mode over USB. So the cable was actually fine. Something else must be blocking the ADB connection.
 
 ```
 ./rkdeveloptool ld
