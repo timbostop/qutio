@@ -1,5 +1,5 @@
 ---
-title: "Jailbreaking a cheap Frameo photo frame to show a Home Assistant dashboard"
+title: "Jailbreaking a cheap Frameo photo frame (Bigasuo 15.6”) to show a Home Assistant dashboard"
 date: 2026-10-13
 ---
 
